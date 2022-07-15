@@ -1,0 +1,3 @@
+name = "hono-template"
+main = "src/index.ts"
+compatibility_date = "2022-07-15"
