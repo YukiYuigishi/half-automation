@@ -1,0 +1,6 @@
+backend_ci: &backend_ci
+  - '.github/workflows/backend*.yml'
+
+backend:
+  - *backend_ci
+  - 'backend/**'
