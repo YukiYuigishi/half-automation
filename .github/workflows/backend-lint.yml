@@ -43,7 +43,7 @@ jobs:
         with:
           node-version: ${{env.node-version}}
       - name: Install Dependencies
-        run: yarn run lint --max-warnings=0
+        run: yarn install --immutable
       - name: eslint
         run: yarn run lint --max-warnings=0
   run-linter-check:
