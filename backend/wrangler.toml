@@ -1,3 +1,10 @@
-name = "hono-template"
+name = "hono-example-blog"
 main = "src/index.ts"
-compatibility_date = "2022-07-15"
+workers_dev = true
+
+compatibility_date = "2022-02-03"
+
+kv_namespaces = [
+  { binding = "BLOG_EXAMPLE", preview_id = "f49769f60ada41f69a564354a43ef13a", id = "a2ad3f2ca760467ab85c42932be29d42" }
+]
+
