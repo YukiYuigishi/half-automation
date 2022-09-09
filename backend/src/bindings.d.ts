@@ -1,3 +1,3 @@
 export interface Bindings {
-   BlOG_EXAMPLE: KVNamespace;
+   HALF_AUTOMATION: KVNamespace;
 }

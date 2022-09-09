@@ -8,7 +8,7 @@ api.get("/", (c) => c.json({ HAAPI: "Hello" }));
 
 api.get("/timer/:id", async (c) => {
    const { id } = c.req.param();
-   const timer = await model.getTime(c.env.BlOG_EXAMPLE, id);
+   const timer = await model.getTime(c.env.HALF_AUTOMATION, id);
    if (!timer) {
       const data = { error: "Not Found", ok: false };
       return c.json(data, 404);
@@ -25,7 +25,7 @@ api.put("/timer/:id", async (c) => {
       return c.json(data, 400);
    }
    const param: model.Param = { startTime: time };
-   await model.updateTime(c.env.BlOG_EXAMPLE, id, param);
+   await model.updateTime(c.env.HALF_AUTOMATION, id, param);
 
    return c.json({ ok: true });
 });
