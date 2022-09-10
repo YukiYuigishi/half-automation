@@ -1,11 +1,9 @@
 // jest.config.js
 module.exports = {
    testEnvironment: "miniflare",
-   testMatch: [
-      "**/test/**/*.+(ts|tsx|js)",
-      "**/src/**/(*.)+(spec|test).+(ts|tsx|js)",
-   ],
+   roots: ["<rootDir>/src"],
+   testMatch: ["**/?(*.)+(spec|test).+(ts|tsx)"],
    transform: {
-      "^.+\\.(ts|tsx)$": "ts-jest",
-   }
+      "^.+\\.(ts|tsx)$": "esbuild-jest",
+   },
 };

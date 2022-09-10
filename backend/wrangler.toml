@@ -1,3 +1,10 @@
-name = "hono-template"
-main = "src/index.ts"
-compatibility_date = "2022-07-15"
+name = "half-automation"
+main = "src/index.tsx"
+workers_dev = true
+
+compatibility_date = "2022-02-03"
+
+kv_namespaces = [
+  { binding = "HALF_AUTOMATION", preview_id = "322c83a72d4e4d8fae4fd447e3d729ff", id = "40f67865d0b646c4a9cab0259dc1a2d5" }
+]
+
