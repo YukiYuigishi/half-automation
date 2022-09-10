@@ -6,24 +6,30 @@
 const char *ssid = "TP-Link_3B04";
 const char *password = "63464320";
 
-String serverName = "https://half-automation.yuigishi.workers.dev/";
+String serverName = "https://half-automation.yuigishi.workers.dev/api/timer";
 String response = "";
 
 DynamicJsonDocument doc(2048);
-void setup() {
+void setup()
+{
 
   Serial.begin(115200);
 
   WiFi.mode(WIFI_STA);
 
-  if (WiFi.begin(ssid, password) != WL_DISCONNECTED) {
+  if (WiFi.begin(ssid, password) != WL_DISCONNECTED)
+  {
     ESP.restart();
   }
 
-  while ((WiFi.status() != WL_CONNECTED)) {
+  while ((WiFi.status() != WL_CONNECTED))
+  {
     delay(1000);
     Serial.print(".");
   }
+
+  pinMode(15, OUTPUT);
+  digitalWrite(15, HIGH);
 
   configTime(9 * 3600L, 0, "ntp.nict.jp", "time.google.com",
              "ntp.jst.mfeed.ad.jp");
@@ -32,9 +38,11 @@ void setup() {
 struct tm timeInfo;
 char s[20];
 
-void loop() {
+void loop()
+{
 
-  while ((WiFi.status() != WL_CONNECTED)) {
+  while ((WiFi.status() != WL_CONNECTED))
+  {
     delay(1000);
     Serial.print(".");
   }
@@ -50,23 +58,48 @@ void loop() {
 
   int httpResponseCode = http.GET();
 
-  if (httpResponseCode > 0) {
+  if (httpResponseCode > 0)
+  {
     Serial.print("HTTP Response code: ");
     Serial.println(httpResponseCode);
     String payload = http.getString();
 
-    deserializeJson(doc, http.getStream());
+    DeserializationError error = deserializeJson(doc, payload);
+    if (error)
+    {
+      Serial.print(F("deserializeJson() failed: "));
+      Serial.println(error.f_str());
+      return;
+    }
 
-    Serial.println(doc["id"].as<String>());
-
-
+    const char *id = doc["timer"]["id"];
+    Serial.println(id);
     Serial.println(payload);
-  } else {
+  }
+  else
+  {
     Serial.print("Error Code: ");
     Serial.println(httpResponseCode);
   }
 
   http.end();
+
+  const char *id = doc["timer"]["startTime"];
+  char nowTime[20] = {0};
+  sprintf(nowTime, "%d:%d", timeInfo.tm_hour, timeInfo.tm_min);
+  Serial.println(nowTime);
+
+  if (strcmp(id, nowTime) == 0)
+  {
+    Serial.println("Success");
+    digitalWrite(15, LOW);
+    delay(1000);
+    digitalWrite(15,HIGH);
+  }
+  else
+  {
+    Serial.println("Failed");
+  }
 
   delay(5000);
 }
