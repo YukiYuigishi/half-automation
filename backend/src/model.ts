@@ -1,10 +1,16 @@
 export interface PostTimer {
    id: string;
    startTime: string;
+   timer: string;
+   // 0 時限起動家電 // 1 タイマー式家電
+   type: number;
 }
 
-export type Param = {
-   startTime: string;
+export type TimerParam = {
+   timer: string;
+   // 0 時限起動家電
+   // // 1 タイマー式家電
+   type: number;
 };
 
 export const getTime = async (
@@ -18,18 +24,27 @@ export const getTime = async (
    return post;
 };
 
-export const updateTime = async (
+export const updateStartupTimer = async (
    KV: KVNamespace,
    id: string,
-   param: Param
+   param: TimerParam
 ): Promise<PostTimer | undefined> => {
-   if (!(param && param.startTime)) return undefined;
+   if (!(param && param.timer && param.type)) return undefined;
+
+   switch (param.type) {
+      case 0:
+         break;
+      case 1:
+         break;
+   }
 
    // めんどいのでupdateとcreate兼用
 
    const newTimer: PostTimer = {
       id,
-      startTime: param.startTime,
+      startTime: param.type == 0 ? param.timer : "",
+      timer: param.type == 1 ? param.timer : "",
+      type: param.type,
    };
 
    await KV.put(id, JSON.stringify(newTimer));

@@ -24,8 +24,8 @@ api.put("/timer/:id", async (c) => {
       const data = { error: "Query Error", ok: false };
       return c.json(data, 400);
    }
-   const param: model.Param = { startTime: time };
-   await model.updateTime(c.env.HALF_AUTOMATION, id, param);
+   const param: model.TimerParam = { timer: time, type: 0 };
+   await model.updateStartupTimer(c.env.HALF_AUTOMATION, id, param);
 
    return c.json({ ok: true });
 });
