@@ -30,20 +30,12 @@ export const updateStartupTimer = async (
    param: TimerParam
 ): Promise<PostTimer | undefined> => {
    if (!(param && param.timer && param.type)) return undefined;
-
-   switch (param.type) {
-      case 0:
-         break;
-      case 1:
-         break;
-   }
-
    // めんどいのでupdateとcreate兼用
 
    const newTimer: PostTimer = {
       id,
-      startTime: param.type == 0 ? param.timer : "",
-      timer: param.type == 1 ? param.timer : "",
+      startTime: param.type === 0 ? param.timer : "",
+      timer: param.type === 1 ? param.timer : "",
       type: param.type,
    };
 
