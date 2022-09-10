@@ -29,7 +29,7 @@ export const updateStartupTimer = async (
    id: string,
    param: TimerParam
 ): Promise<PostTimer | undefined> => {
-   if (!(param && param.timer && param.type)) return undefined;
+   if (!(param && param.timer)) return undefined;
    // めんどいのでupdateとcreate兼用
 
    const newTimer: PostTimer = {
